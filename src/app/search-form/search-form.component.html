@@ -1,0 +1,21 @@
+<ul class="errors" *ngIf="errors.length > 0">
+ <li *ngFor="let err of errors">{{ err }}</li>
+</ul>
+<div [ngSwitch]="currentFormState">
+  <ng-container *ngSwitchCase="true">
+    <form [formGroup]="singleSearchForm" (submit)="doSingleSearch()">
+      <div class="doi-wrapper">
+      <label for="doi">DOI</label>
+      <input id="doi" type="text" formControlName="doi">
+      </div>
+      <button type="submit" class="primary">Add</button> <button>Reset</button>
+    </form>
+  </ng-container>
+  <ng-container *ngSwitchCase="false">
+    <div>
+      <p>Upload a plain text file of DOIs, one per line. This will automatically start processing all the DOIs.</p>
+      <p><input type="file" id="form-doi-file" accept=".txt" (change)="onFileSelected($event)" #doiFile /></p>
+      <button (click)=[uploadFile(doiFile)] class="primary">Upload</button> <button>Reset</button>
+    </div>
+  </ng-container>
+</div>

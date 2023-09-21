@@ -1,0 +1,13 @@
+.total_bar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  margin: 1em auto;
+}
+.total_item {
+  margin: auto .5em;
+}
+.total_item label:after {
+  content: ':';
+}

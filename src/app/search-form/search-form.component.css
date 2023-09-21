@@ -1,0 +1,12 @@
+.doi-wrapper {
+  padding: 1em;
+}
+ul.errors {
+  padding: .6em;
+  border: 1px solid #f73346;
+  background-color: #990000;
+  list-style-type: none;
+}
+button.primary {
+  margin-right: .5em;
+}
