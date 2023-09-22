@@ -18,6 +18,7 @@ export class DoiRetrieverService {
   }
   private handleError(error: HttpErrorResponse): Observable<Error> {
     let message = "";
+    console.log({'full error': error});
     if (error.status === 0) {
       console.error('An error occurred:', error.error);
       message = "An unexpected error occurred, details are in your browser's console. Please let the website admin know.";
@@ -27,7 +28,13 @@ export class DoiRetrieverService {
       console.error(`Backend returned code ${error.status}, body was: `, error.error);
       switch (error.status) {
         case 404:
-          message = "Unable to find information on the requested DOI";
+          if (error.url !== undefined && error.url !== null && error.url.length > 0) {
+            const doi_stack: string[] = (<string>error.url).split('/');
+            const doi = doi_stack.pop();
+            message = `Unable to find information on the requested DOI (${doi})`;
+          } else {
+            message = `Unable to find information on the requested DOI`;
+          }
           break;
         case 429:
           message = "You have hit the limit for free requests. You will need to wait till tomorrow to continue.";

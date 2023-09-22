@@ -3,19 +3,17 @@
 </ul>
 <div [ngSwitch]="currentFormState">
   <ng-container *ngSwitchCase="true">
-    <form [formGroup]="singleSearchForm" (submit)="doSingleSearch()">
       <div class="doi-wrapper">
-      <label for="doi">DOI</label>
-      <input id="doi" type="text" formControlName="doi">
+        <label for="doi">DOI</label>
+        <input id="doi" type="text" #doi>
       </div>
-      <button type="submit" class="primary">Add</button> <button>Reset</button>
-    </form>
+      <button (click)=[doSingleSearch(doi)] class="primary">Add</button> <button (click)=[resetRecords()]>Reset</button>
   </ng-container>
   <ng-container *ngSwitchCase="false">
     <div>
       <p>Upload a plain text file of DOIs, one per line. This will automatically start processing all the DOIs.</p>
-      <p><input type="file" id="form-doi-file" accept=".txt" (change)="onFileSelected($event)" #doiFile /></p>
-      <button (click)=[uploadFile(doiFile)] class="primary">Upload</button> <button>Reset</button>
+      <p><input type="file" id="form-doi-file" accept=".txt" #doiFile /></p>
+      <button (click)=[uploadFile(doiFile)] class="primary">Upload</button> <button (click)=[resetRecords()]>Reset</button>
     </div>
   </ng-container>
 </div>

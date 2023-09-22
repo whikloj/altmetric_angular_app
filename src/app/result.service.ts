@@ -29,4 +29,7 @@ export class ResultService {
     console.log(`Check for duplicate to ${doi}`);
     return this.getRecords().map((r) => r.doi).includes(doi.toLowerCase());
   }
+  resetRecords(): void {
+    this._setResults([]);
+  }
 }

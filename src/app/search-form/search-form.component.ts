@@ -36,16 +36,25 @@ export class SearchFormComponent {
       this.resetErrors();
     });
   }
+  resetRecords():void {
+    this.resultService.resetRecords();
+    this.resetErrors();
+  }
   resetErrors(): void {
     this.errors = [];
   }
-  doSingleSearch(): void {
+  doSingleSearch(theText: HTMLInputElement | undefined): void {
     this.resetErrors();
-    console.log(`Doing single search with ${this.singleSearchForm.value.doi}`);
-    // Check for the doi already having been queried.
-    this.doQuery(this.singleSearchForm.value.doi ?? '');
+    if (theText != undefined) {
+      const doi: string = theText.value.trim();
+      if (doi.length > 0) {
+        console.log(`Doing single search with ${doi}`);
+        this.doQuery(doi);
+        theText.value = '';
+      }
+    }
   }
-  doQuery(doi: string): void {
+  private doQuery(doi: string): void {
     if (doi.length > 0) {
       if (! this.resultService.checkForDuplicates(doi)) {
         this.queryService.getByDoi(doi).subscribe({
@@ -84,8 +93,5 @@ export class SearchFormComponent {
         }
       }
     }
-  }
-  onFileSelected($event: Event) {
-    console.log({'fileSelected': $event});
   }
 }
