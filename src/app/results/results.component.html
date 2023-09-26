@@ -20,7 +20,7 @@
       <td>{{result.cited_by_accounts_count}}</td>
       <td>{{result.cited_by_policies_count}}</td>
       <td>{{result.cited_by_patents_count}}</td>
-      <td><a class="App-link" href={{result.details_url}} target="_new">details</a></td>
+      <td><a class="App-link" [routerLink]="['/details', result.altmetric_id]">details</a></td>
     </tr>
   </tbody>
 </table>

@@ -1,0 +1,23 @@
+.App-header {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1em;
+  padding: .5em;
+}
+
+.App-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.request-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+#hourlyLimit {
+  margin-right: 1.2em;
+}

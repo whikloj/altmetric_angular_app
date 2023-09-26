@@ -1,0 +1,25 @@
+.App-link {
+  color: #61dafb;
+}
+
+.navigation {
+  margin-bottom: 1em;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.row:nth-child(even) {
+  background-color: #076b86;
+}
+
+.row label {
+  margin-right: 0.6em;
+  font-weight: bold;
+  width: 25%;
+}
+
+.row label:after {
+  content: ':';
+}

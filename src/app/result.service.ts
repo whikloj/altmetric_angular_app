@@ -18,6 +18,10 @@ export class ResultService {
     return this._resultSource.getValue();
   }
 
+  getRecordById(id: number): AltmetricResult | undefined {
+    return this.getRecords().find((x) => x.altmetric_id == id);
+  }
+
   addRecords(result: AltmetricResult[]): void {
     const records = [...this.getRecords()]
     console.log({'current': records, 'new': result});

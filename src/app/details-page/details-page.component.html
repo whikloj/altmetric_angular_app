@@ -1,0 +1,9 @@
+<section class="details">
+  <div class="navigation">
+    <a class="App-link" [routerLink]="['/']">Return to main page</a>
+  </div>
+  <div class="row" *ngFor="let field of this.labels">
+    <label for="block-title" *ngIf="!!this.result[field[0]]">{{ field[1] }}</label>
+    <span id="block-title" *ngIf="!!this.result[field[0]]">{{ formatValue(field[0], this.result[field[0]]) }}</span>
+  </div>
+</section>

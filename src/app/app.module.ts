@@ -8,6 +8,10 @@ import { SearchFormComponent } from './search-form/search-form.component';
 import { ResultsComponent } from './results/results.component';
 import { TotalsComponent } from './totals/totals.component';
 import { FormChoiceComponent } from './form-choice/form-choice.component';
+import { DetailsPageComponent } from './details-page/details-page.component';
+import { SearchPageComponent } from './search-page/search-page.component';
+import { AppRoutingModule } from './app-routing.module';
+
 
 @NgModule({
   declarations: [
@@ -15,13 +19,16 @@ import { FormChoiceComponent } from './form-choice/form-choice.component';
     SearchFormComponent,
     ResultsComponent,
     TotalsComponent,
-    FormChoiceComponent
+    FormChoiceComponent,
+    DetailsPageComponent,
+    SearchPageComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
