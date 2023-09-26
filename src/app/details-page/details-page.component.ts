@@ -27,8 +27,8 @@ export class DetailsPageComponent {
     ['handles', 'Relevant Handle(s)'],
     ['issns', 'Relevant ISSN(s)'],
     ['journal', 'Name of publication journal'],
-    ['pubdate', 'The print date that the publication was published. In Unix.'],
-    ['epubdate', 'The date that the publication was published electronically. In Unix.'],
+    ['pubdate', 'The print date that the publication was published.'],
+    ['epubdate', 'The date that the publication was published electronically.'],
     ['abstract', 'Full abstract for the article'],
     ['abstract_source', 'Source for the abstract (e.g PUBMED)'],
     ['authors', 'Author names'],
@@ -46,9 +46,9 @@ export class DetailsPageComponent {
     ['cited_by_videos_count', 'Number of Youtube channels'],
     ['cited_by_accounts_count', 'The number of unique sources referencing the research output'],
     ['cited_by_posts_count', 'The total number of individual posts for the requested research output'],
-    ['last_updated', 'Last time the score changed. In UNIX.'],
+    ['last_updated', 'Last time the score changed.'],
 
-    ['added_on', 'Date when Altmetric first captured attention. In UNIX.'],
+    ['added_on', 'Date when Altmetric first captured attention.'],
     ['details_url', 'URL to relevant Altmetric Details Page'],
     ['authors_or_editors', 'Author and editor names'],
     ['attribution', 'Source of data. For example Google Books']

@@ -5,10 +5,7 @@
       <th>DOI</th>
       <th>Type</th>
       <th>Attention score</th>
-      <th>Cited by (count)</th>
-      <th>Cited in policies (count)</th>
-      <th>Cited in patents (count)</th>
-      <th>Details URL</th>
+      <th>&nbsp;</th>
     </tr>
   </thead>
   <tbody>
@@ -17,10 +14,7 @@
       <td>{{result.doi}}</td>
       <td>{{result.type}}</td>
       <td>{{result.score}}</td>
-      <td>{{result.cited_by_accounts_count}}</td>
-      <td>{{result.cited_by_policies_count}}</td>
-      <td>{{result.cited_by_patents_count}}</td>
-      <td><a class="App-link" [routerLink]="['/details', result.altmetric_id]">details</a></td>
+      <td><a class="App-link" [routerLink]="['/details', result.altmetric_id]">View all details</a></td>
     </tr>
   </tbody>
 </table>
