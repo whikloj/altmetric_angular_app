@@ -1,20 +1,17 @@
 <table class="results">
   <thead>
     <tr>
-      <th>Title</th>
-      <th>DOI</th>
-      <th>Type</th>
-      <th>Attention score</th>
-      <th>&nbsp;</th>
+      <th *ngFor="let label of exportLabels">{{ label }}</th>
     </tr>
   </thead>
   <tbody>
     <tr key={index} class="citation_result" *ngFor="let result of resultsList">
-      <td class="title_data">{{result.title}}</td>
-      <td>{{result.doi}}</td>
-      <td>{{result.type}}</td>
-      <td>{{result.score}}</td>
-      <td><a class="App-link" [routerLink]="['/details', result.altmetric_id]">View all details</a></td>
+      <td *ngFor="let field of exportFields">
+        <ng-container [ngSwitch]="field[1]">
+          <ng-container *ngSwitchCase="'url'"><a class="App-link" href="{{ result[field[0]] }}" target="_new">{{ result[field[0]] }}</a></ng-container>
+          <ng-container *ngSwitchDefault>{{ formatField(result[field[0]], field[1]) }}</ng-container>
+        </ng-container>
+      </td>
     </tr>
   </tbody>
 </table>

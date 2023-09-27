@@ -13,3 +13,11 @@ ul.errors {
 button.primary {
   margin-right: .5em;
 }
+.errors {
+  max-height: 200px;
+  overflow-y: scroll;
+}
+span.App-link {
+  color: #61dafb;
+  cursor: pointer;
+}

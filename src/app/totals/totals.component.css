@@ -8,6 +8,12 @@
 .total_item {
   margin: auto .5em;
 }
+.total_item label {
+  margin-right: 0.6em;
+}
 .total_item label:after {
   content: ':';
+}
+.App-link {
+  color: #61dafb;
 }

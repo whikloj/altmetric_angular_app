@@ -16,7 +16,7 @@ export class FormStateService {
   }
   toggleState(): void {
     const currentState = this.getState();
-    console.log({'currentState': (currentState ? 'true' : 'false')})
+    //console.log({'currentState': (currentState ? 'true' : 'false')})
     this._setState(!currentState);
   }
 }

@@ -1,4 +1,5 @@
 <ul class="errors" *ngIf="errors.length > 0">
+  <li><span class="App-link" (click)="resetErrors()">Clear errors</span></li>
  <li *ngFor="let err of errors">{{ err }}</li>
 </ul>
 <div [ngSwitch]="currentFormState">

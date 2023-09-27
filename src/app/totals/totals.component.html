@@ -7,4 +7,11 @@
     <label htmlFor="total_attention">Cumulative attention score</label>
     <span id="total_attention">{{ totalAttention }}</span>
   </div>
+  <div class="total_item">
+    <label htmlFor="avg_attention">Average attention score</label>
+    <span id="avg_attention">{{ avgAttention }}</span>
+  </div>
+  <div class="total_item" *ngIf="totalCount > 0">
+    <a class="App-link" download="altmetric_data.csv" href="{{ doExport() }}">Export</a>
+  </div>
 </div>

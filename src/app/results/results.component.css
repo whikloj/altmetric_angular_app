@@ -12,6 +12,11 @@
 .results thead th:last-child, .citation_result td:last-child {
   border-right: none;
 }
+.results th {
+  position: sticky;
+  top: 0;
+  background: black;
+}
 
 .citation_result:nth-child(even) {
   background-color: #3a6373;

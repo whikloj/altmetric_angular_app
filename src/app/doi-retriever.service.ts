@@ -29,8 +29,7 @@ export class DoiRetrieverService {
       switch (error.status) {
         case 404:
           if (error.url !== undefined && error.url !== null && error.url.length > 0) {
-            const doi_stack: string[] = (<string>error.url).split('/');
-            const doi = doi_stack.pop();
+            const doi: string = (<string>error.url).split('/').splice(-2).join('/');
             message = `Unable to find information on the requested DOI (${doi})`;
           } else {
             message = `Unable to find information on the requested DOI`;
