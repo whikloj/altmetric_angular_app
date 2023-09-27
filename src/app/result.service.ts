@@ -78,9 +78,9 @@ export class ResultService {
   }
   private _altmetricToCsv(alt: AltmetricResult): string[] {
     let returnValue = [];
-    console.log({'altmetric record': alt});
+    // console.log({'altmetric record': alt});
     for (let f of this.exportFields) {
-      console.log({'f': f});
+      // console.log({'f': f});
       let fieldValue = "";
       if (typeof alt[f[0]] !== 'undefined') {
         if (f[1] === 'string') {
