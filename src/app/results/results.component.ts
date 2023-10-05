@@ -1,7 +1,8 @@
 import { Component, Injectable } from '@angular/core';
-import { AltmetricResult } from '../altmetric-result';
+import { AltmetricResult, Result } from '../result';
 import { AltmetricImages } from '../altmetric-images';
 import { ResultService } from '../result.service';
+import { TotalsComponent } from '../totals/totals.component';
 
 @Component({
   selector: 'app-results',
@@ -10,27 +11,42 @@ import { ResultService } from '../result.service';
 })
 @Injectable()
 export class ResultsComponent {
-  resultsList: AltmetricResult[] = [];
+  resultsList: Result[] = [];
   exportLabels: string[];
   exportFields: string[][];
   resultService: ResultService;
+
+  /**
+   * Basic constructor
+   * @constructor
+   * @param {ResultService} rs - Service with the current results.
+   */
   constructor(private rs: ResultService) {
     this.resultService = rs;
     this.exportFields = rs.exportFields;
     this.exportLabels = rs.exportLabels;
-    rs.results$.subscribe((x: AltmetricResult[]) => {
-//      console.log({"results component": x});
+    rs.results$.subscribe((x: Result[]) => {
       this.resultsList = [...x];
     });
   }
-  formatField(field: string | string[] | number | AltmetricImages | Date, formatKey: string) {
-    switch (formatKey) {
-      case 'date':
-        return new Date(parseInt((<string>field))*1000).toUTCString();
-        break;
-      default:
-        return field;
-        break;
+  /**
+   * Function to format the field output.
+   */
+  formatField(field: any, formatKey: string) {
+    if (field !== null && typeof(field) !== 'undefined') {
+      switch (formatKey) {
+        case 'float':
+          return this.resultService.roundToDecimal(field);
+          break;
+        case 'date':
+          return new Date(parseInt(field.toString())*1000).toUTCString();
+          break;
+        default:
+          return field;
+          break;
+      }
+    } else {
+      return "";
     }
   }
 }

@@ -5,13 +5,16 @@
   </div>
   <div class="total_item">
     <label htmlFor="total_attention">Cumulative attention score</label>
+    <img src="assets/question_mark.png" class="question_mark" title="This is the sum of all Altmetric scores." />
     <span id="total_attention">{{ totalAttention }}</span>
   </div>
   <div class="total_item">
     <label htmlFor="avg_attention">Average attention score</label>
-    <span id="avg_attention">{{ avgAttention }}</span>
+    <img src="assets/question_mark.png" class="question_mark" title="This is the cumulative attention divided by a count of Altmetric records" />
+    <span id="avg_attention" >{{ avgAttention }}</span>
   </div>
   <div class="total_item" *ngIf="totalCount > 0">
     <a class="App-link" download="altmetric_data.csv" href="{{ doExport() }}">Export</a>
+    <img src="assets/question_mark.png" class="question_mark" title="Export only contains Altmetric records" />
   </div>
 </div>

@@ -9,11 +9,16 @@
   margin: auto .5em;
 }
 .total_item label {
-  margin-right: 0.6em;
+  margin-right: 0.2em;
 }
 .total_item label:after {
   content: ':';
 }
 .App-link {
   color: #61dafb;
+}
+.question_mark {
+  max-width: 1.1em;
+  margin-right: 0.6em;
+  cursor: help;
 }

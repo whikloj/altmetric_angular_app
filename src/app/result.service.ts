@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Subject, BehaviorSubject } from 'rxjs';
-import { AltmetricResult } from './altmetric-result';
+import { OpenAlexResult, AltmetricResult, Result } from './result';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResultService {
-  private readonly _resultSource = new BehaviorSubject<AltmetricResult[]>([]);
+  private readonly _resultSource = new BehaviorSubject<Result[]>([]);
   readonly results$ = this._resultSource.asObservable();
 
   readonly exportFields: string[][] = [
@@ -48,34 +48,100 @@ export class ResultService {
     'Details URL'
   ];
 
-  constructor() { }
-
-  private _setResults(results: AltmetricResult[]): void {
+  /**
+   * Replace the observable's value with a new one.
+   * @param {Result[]} results - The new results.
+   */
+  private _setResults(results: Result[]): void {
     this._resultSource.next(results);
   }
 
-  getRecords(): AltmetricResult[] {
+  /**
+   * Get the current observable values.
+   */
+  getRecords(): Result[] {
     return this._resultSource.getValue();
   }
 
-  getRecordById(id: number): AltmetricResult | undefined {
-    return this.getRecords().find((x) => x.altmetric_id == id);
+  /**
+   * Get a result with a specified ID.
+   * @param {number} id - The number to filter on.
+   */
+  getRecordById(id: number): Result | undefined {
+    return this.getRecords().find((x) => x.ids.includes(id.toString()));
   }
 
-  addRecords(result: AltmetricResult[]): void {
-    const records = [...this.getRecords()]
-    //console.log({'current': records, 'new': result});
-    const new_records = records.concat(result);
-    //console.log({'setting with:': new_records});
-    this._setResults(new_records);
+  /**
+   * Get a result with a specified DOI.
+   * @param {string} id - The DOI to filter on.
+   */
+  getRecordByDoi(doi: string): Result | undefined {
+    return this.getRecords().find((x) => x.dois.includes(doi));
   }
+
+  /**
+   * Add a new result to the current state.
+   * @param {AltmetricResult | OpenAlexResult} result - The new result
+   */
+  private _addUpdateRecord(result: AltmetricResult | OpenAlexResult, isAltmetric: boolean): void {
+    const records = [...this.getRecords()];
+    const searchDoi = result.doi.replace('https://doi.org/', "").toLowerCase();
+    const index = records.findIndex((e) => e.dois.includes(searchDoi));
+    console.log({'addUpdateRecords': records, 'index': index});
+    if (index > -1) {
+      if (isAltmetric) {
+        records[index].setFromAltmetric(<AltmetricResult>result);
+      } else {
+        records[index].setFromOpenAlex(<OpenAlexResult>result);
+      }
+    } else {
+      const tmpR = new Result();
+      if (isAltmetric) {
+        tmpR.setFromAltmetric(<AltmetricResult>result);
+      } else {
+        tmpR.setFromOpenAlex(<OpenAlexResult>result);
+      }
+      records.push(tmpR);
+    }
+    this._setResults(records);
+  }
+
+  /**
+   * Add a new Result with this AltmetricResult or update an existing Result with this information.
+   * @param {AltmetricResult} result - The altmetric result to add/update.
+   */
+  addAltmetricRecords(result: AltmetricResult): void {
+    this._addUpdateRecord(result, true);
+  }
+
+  /**
+   * Add a new Result with this OpenAlexResult or update an existing Result with this information.
+   * @param {OpenAlexResult} result - The openalex result to add/update.
+   */
+  addOpenAlexRecord(result: OpenAlexResult): void {
+    this._addUpdateRecord(result, false);
+  }
+
+  /**
+   * Check for an existing record with this DOI.
+   * @param {string} doi - The doi to look for.
+   */
   checkForDuplicates(doi: string): boolean {
     //console.log(`Check for duplicate to ${doi}`);
-    return this.getRecords().map((r) => r.doi).includes(doi.toLowerCase());
+    return (this.getRecords().find((r) => r.dois.includes(doi.toLowerCase())) instanceof Result);
   }
+
+  /**
+   * Remove all records.
+   */
   resetRecords(): void {
     this._setResults([]);
   }
+
+  /**
+   * Convert the AltmetricResult data to an array to export.
+   * @param {AltmetricResult} alt - The result to convert.
+   */
   private _altmetricToCsv(alt: AltmetricResult): string[] {
     let returnValue = [];
     // console.log({'altmetric record': alt});
@@ -95,12 +161,26 @@ export class ResultService {
     }
     return returnValue;
   }
+
+  /**
+   * Return a UTF-8 encoded data URI with the CSV export data.
+   */
   exportAsCsv() {
     const final = [
       [...this.exportLabels],
     ];
-    this.getRecords().forEach((e) => final.push(this._altmetricToCsv(e)));
+    this.getRecords().map((e) => e.altmetric_details)
+      .filter((r) => typeof(r) !== 'undefined').forEach((e) => final.push(this._altmetricToCsv(e)));
     return "data:text/csv;charset=utf-8,"
       + final.map(e => e.join(",")).join("\n");
+  }
+
+  /**
+   * Round a float to 2 decimal places.
+   * @param {number} num - The number to round.
+   */
+  roundToDecimal(num: number): number {
+    const temp = num * 100;
+    return Math.round(temp) / 100;
   }
 }

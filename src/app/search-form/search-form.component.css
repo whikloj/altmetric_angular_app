@@ -15,7 +15,7 @@ button.primary {
 }
 .errors {
   max-height: 200px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 span.App-link {
   color: #61dafb;

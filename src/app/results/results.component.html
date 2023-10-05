@@ -1,17 +1,23 @@
+<ng-template #noAlt><td>No Altmetric record</td></ng-template>
 <table class="results">
   <thead>
     <tr>
-      <th *ngFor="let label of exportLabels">{{ label }}</th>
+      <th>Title</th>
+      <th>DOI</th>
+      <th>Altmetric score</th>
+      <th>Cited by count (Altmetric)</th>
+      <th>Cited by count (OpenAlex)</th>
+      <th>Altmetric details url</th>
     </tr>
   </thead>
   <tbody>
     <tr key={index} class="citation_result" *ngFor="let result of resultsList">
-      <td *ngFor="let field of exportFields">
-        <ng-container [ngSwitch]="field[1]">
-          <ng-container *ngSwitchCase="'url'"><a class="App-link" href="{{ result[field[0]] }}" target="_new">{{ result[field[0]] }}</a></ng-container>
-          <ng-container *ngSwitchDefault>{{ formatField(result[field[0]], field[1]) }}</ng-container>
-        </ng-container>
-      </td>
+      <td>{{ result.title }}</td>
+      <td>{{ result.dois.join(',') }}</td>
+      <td *ngIf="result.altmetric_details !== undefined; else noAlt">{{ formatField(result.altmetric_details!.score, 'float') }}</td>
+      <td>{{ result.cited_by_counts.get('altmetric') }}</td>
+      <td>{{ result.cited_by_counts.get('openalex') }}</td>
+      <td *ngIf="result.altmetric_details !== undefined; else noAlt"><a class="App-link" href="{{ result.altmetric_details.details_url }}" target="_new">Open details</a></td>
     </tr>
   </tbody>
 </table>

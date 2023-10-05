@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ResultService } from '../result.service';
-import { AltmetricResult } from '../altmetric-result';
+import { AltmetricResult, Result } from '../result';
 
 @Component({
   selector: 'app-totals',
@@ -12,36 +12,37 @@ export class TotalsComponent {
     totalAttention: number = 0;
     avgAttention: number = 0;
     private resultService: ResultService;
+
+    /**
+     * Basic constructor
+     * @constructor
+     * @param {ResultService} rs - The service providing the current results.
+     */
     constructor(private rs: ResultService) {
       this.resultService = rs;
-      rs.results$.subscribe((x: AltmetricResult[]) => {
+      rs.results$.subscribe((x: Result[]) => {
         const count = x.length;
         let score = 0;
-        x.forEach(r => score += r.score);
-        this.totalAttention = this.roundToDecimal(score);
+        let altmetric_count = 0;
+        x.map(x => x.altmetric_details).filter((r) => typeof(r) !== 'undefined').forEach(r => {
+          score += r.score;
+          altmetric_count += 1;
+        });
+        this.totalAttention = this.resultService.roundToDecimal(score);
         this.totalCount = count;
         if (this.totalCount > 0) {
-          this.avgAttention = this.roundToDecimal(score / count);
+          this.avgAttention = this.resultService.roundToDecimal(score / altmetric_count);
         } else {
           this.avgAttention = 0;
         }
       });
     }
-    roundToDecimal(num: number): number {
-      let temp = num * 100;
-      return Math.round(temp) / 100;
-    }
+    /**
+     * Button action to return exported data.
+     */
     doExport() {
       const csvContent = this.resultService.exportAsCsv();
       const encodedData = encodeURI(csvContent);
-      //window.open(encodedData);
       return encodedData;
-      //this.saveContent(encodedData, 'altmetric_data.csv');
-    }
-    private saveContent = (fileContents: string, fileName: string) => {
-      const link = document.createElement('a');
-      link.download = fileName;
-      link.href = fileContents;
-      link.click();
     }
 }

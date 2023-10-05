@@ -4,7 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { Observable, ObservableInput } from 'rxjs';
 
 import { ResultService } from '../result.service';
-import { AltmetricResult } from '../altmetric-result';
+import { AltmetricResult, OpenAlexResult, Result } from '../result';
 
 @Component({
   selector: 'app-details-page',
@@ -13,7 +13,7 @@ import { AltmetricResult } from '../altmetric-result';
 })
 export class DetailsPageComponent {
   @Input() id = '';
-  result!: AltmetricResult;
+  result!: Result;
   private rService: ResultService;
   labels: string[][] = [
     ['title', 'Title'],
@@ -60,11 +60,12 @@ export class DetailsPageComponent {
     'added_on'
   ];
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: ResultService
-  ) {
+  /**
+   * Basic constructor
+   * @constructor
+   * @param {ResultService} service - The service storing the current records.
+   */
+  constructor(private service: ResultService) {
     this.rService = service;
   }
 
