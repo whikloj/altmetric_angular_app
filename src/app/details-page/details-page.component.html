@@ -38,5 +38,11 @@
         <a class="App-link" href="{{ result.openalex_details.cited_by_api_url }}" target="_new">{{ result.openalex_details.cited_by_api_url }}</a>
       </span>
     </div>
+    <div class="row" *ngIf="result.openalex_details !== undefined && result?.cited_by_counts?.get('openalex')! > 0">
+      <label for="block-cite-year">OpenAlex citations by year</label>
+      <div class="chart">
+        <canvas id="block-cite-year">{{ citation_chart }}</canvas>
+      </div>
+    </div>
   </div>
 </section>

@@ -2,9 +2,10 @@ import { Component, Input, inject } from '@angular/core';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Observable, ObservableInput } from 'rxjs';
+import { Chart } from 'chart.js/auto';
 
 import { ResultService } from '../result.service';
-import { AltmetricResult, OpenAlexResult, Result } from '../result';
+import { AltmetricResult, OpenAlexResult, Result, OpenAlexCitedByCounts } from '../result';
 
 @Component({
   selector: 'app-details-page',
@@ -14,6 +15,7 @@ import { AltmetricResult, OpenAlexResult, Result } from '../result';
 export class DetailsPageComponent {
   @Input() doi = '';
   result!: Result;
+  citation_chart!: Chart;
   private rService: ResultService;
   labels: string[][] = [
     ['title', 'Title'],
@@ -77,6 +79,9 @@ export class DetailsPageComponent {
     console.log({'record is ': tempResult});
     if (typeof tempResult !== 'undefined') {
       this.result = tempResult;
+      if (tempResult.openalex_details !== undefined) {
+        this.citation_chart = this.generateChart(tempResult.openalex_details.counts_by_year);
+      }
     } else {
       throw new DOMException("WAAAAAAH");
     }
@@ -84,6 +89,30 @@ export class DetailsPageComponent {
 
   private _getOpenAlexCites(uri: string) {
 
+  }
+
+  generateChart(cited_by_year: OpenAlexCitedByCounts[]): Chart {
+
+    return new Chart('block-cite-year', {
+      type: 'line', //this denotes tha type of chart
+
+      data: {// values on X-Axis
+        labels: cited_by_year.map(e => e.year),
+	       datasets: [
+          {
+            label: "Citations",
+            data: cited_by_year.map(e => e.cited_by_count),
+            backgroundColor: '#c231ce',
+            showLine: true,
+            borderColor: '#c231ce'
+          }
+        ]
+      },
+      options: {
+        aspectRatio:2.5,
+        responsive: true,
+      }
+    });
   }
 
   formatValue(key: string, obj: any) {

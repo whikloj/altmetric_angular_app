@@ -26,3 +26,10 @@
 .row label:after {
   content: ':';
 }
+
+.chart {
+  position: relative;
+  display: inline-block;
+  height: 10em;
+  background-color: white;
+}

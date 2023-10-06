@@ -66,7 +66,7 @@ interface OpenAlexResult {
   corresponding_author_ids: string[];
   corresponding_institution_ids: string[];
   countries_distinct_count: number;
-  counts_by_year: Object[];
+  counts_by_year: OpenAlexCitedByCounts[];
   created_date: Date;
   display_name: string;
   doi: string;
@@ -129,6 +129,15 @@ interface OpenAlexIds {
   openalex: string;
   pmid: string;
   pmcid: string;
+}
+
+/**
+ * OpenAlex Works cited by counts object.
+ */
+interface OpenAlexCitedByCounts {
+  [key: string]: number;
+  year: number;
+  cited_by_count: number;
 }
 
 /**
@@ -214,4 +223,4 @@ class Result {
   }
 }
 
-export { Result, AltmetricResult, OpenAlexResult };
+export { Result, AltmetricResult, OpenAlexResult, OpenAlexCitedByCounts };
