@@ -1,9 +1,42 @@
+<ng-template #blankSpan><span></span></ng-template>
 <section class="details">
   <div class="navigation">
     <a class="App-link" [routerLink]="['/']">Return to main page</a>
   </div>
-  <div class="row" *ngFor="let field of this.labels">
-    <label for="block-title" *ngIf="!!this.result[field[0]]">{{ field[1] }}</label>
-    <span id="block-title" *ngIf="!!this.result[field[0]]">{{ formatValue(field[0], this.result[field[0]]) }}</span>
+  <div class="record">
+    <div class="row">
+      <label for="block-title">Title</label>
+      <span id="block-title" *ngIf="result.title !== undefined; else blankSpan">{{ result.title }}</span>
+    </div>
+    <div class="row">
+      <label for="block-doi">DOI</label>
+      <span id="block-doi" *ngIf="result.dois !== undefined; else blankSpan">{{ result.dois.join(', ') }}</span>
+    </div>
+    <div class="row">
+      <label for="block-ids">Identifiers</label>
+      <span id="block-ids" *ngIf="result.ids !== undefined; else blankSpan">{{ result.ids.join(', ') }}</span>
+    </div>
+    <div class="row">
+      <label for="block-author">Author(s)</label>
+      <span id="block-author" *ngIf="result.author_names !== undefined; else blankSpan">{{ result.author_names.join(', ') }}</span>
+    </div>
+    <div class="row">
+      <label for="block-alt-score">Altmetric score</label>
+      <span id="block-alt-score" *ngIf="result.altmetric_details !== undefined; else blankSpan">{{ result.altmetric_details.score }}</span>
+    </div>
+    <div class="row">
+      <label for="block-cited-alt">Count of citations (Altmetric)</label>
+      <span id="block-cited-alt" *ngIf="result.altmetric_details !== undefined; else blankSpan">{{ result.cited_by_counts.get('altmetric') }}</span>
+    </div>
+    <div class="row">
+      <label for="block-cited-open">Count of citations (OpenAlex)</label>
+      <span id="block-cited-open" *ngIf="result.openalex_details !== undefined; else blankSpan">{{ result.cited_by_counts.get('openalex') }}</span>
+    </div>
+    <div class="row">
+      <label for="block-open-cite-url">OpenAlex citations URL</label>
+      <span id="block-open-cite-url" *ngIf="result.openalex_details !== undefined; else blankSpan">
+        <a class="App-link" href="{{ result.openalex_details.cited_by_api_url }}" target="_new">{{ result.openalex_details.cited_by_api_url }}</a>
+      </span>
+    </div>
   </div>
 </section>

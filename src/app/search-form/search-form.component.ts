@@ -69,6 +69,11 @@ export class SearchFormComponent {
       }
     }
   }
+
+  /**
+   * Perform the http requests.
+   * @param {string} doi - The DOI to search for.
+   */
   private doQuery(doi: string): void {
     if (doi.length > 0) {
       if (! this.resultService.checkForDuplicates(doi)) {

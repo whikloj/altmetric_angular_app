@@ -7,7 +7,7 @@ import { SearchPageComponent } from './search-page/search-page.component';
 
 const appRoutes: Routes = [
   { path: '', component: SearchPageComponent },
-  { path: 'details/:id', component: DetailsPageComponent },
+  { path: 'details/:doi', component: DetailsPageComponent },
 ];
 
 @NgModule({

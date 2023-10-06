@@ -49,4 +49,9 @@ export class ResultsComponent {
       return "";
     }
   }
+
+
+  encode(t: string): string {
+    return encodeURIComponent(t);
+  }
 }

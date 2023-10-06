@@ -9,6 +9,7 @@ import { AltmetricResult, Result } from '../result';
 })
 export class TotalsComponent {
     totalCount: number = 0;
+    altmetricCount: number = 0;
     totalAttention: number = 0;
     avgAttention: number = 0;
     private resultService: ResultService;
@@ -28,6 +29,7 @@ export class TotalsComponent {
           score += r.score;
           altmetric_count += 1;
         });
+        this.altmetricCount = altmetric_count;
         this.totalAttention = this.resultService.roundToDecimal(score);
         this.totalCount = count;
         if (this.totalCount > 0) {

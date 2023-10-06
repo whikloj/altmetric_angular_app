@@ -10,7 +10,7 @@
   </div>
   <div class="total_item">
     <label htmlFor="avg_attention">Average attention score</label>
-    <img src="assets/question_mark.png" class="question_mark" title="This is the cumulative attention divided by a count of Altmetric records" />
+    <img src="assets/question_mark.png" class="question_mark" title="This is the cumulative attention divided by a count of Altmetric records ({{ totalAttention }}/{{ altmetricCount }})" />
     <span id="avg_attention" >{{ avgAttention }}</span>
   </div>
   <div class="total_item" *ngIf="totalCount > 0">

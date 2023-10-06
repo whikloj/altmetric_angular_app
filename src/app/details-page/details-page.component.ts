@@ -12,13 +12,14 @@ import { AltmetricResult, OpenAlexResult, Result } from '../result';
   styleUrls: ['./details-page.component.css']
 })
 export class DetailsPageComponent {
-  @Input() id = '';
+  @Input() doi = '';
   result!: Result;
   private rService: ResultService;
   labels: string[][] = [
     ['title', 'Title'],
-    ['score', 'Current Altmetric Attention Score'],
     ['doi', 'Relevant DOI'],
+    ['score', 'Current Altmetric Attention Score'],
+    ['ids', 'Various identifiers'],
     ['pmid', 'Related Pubmed Identifier'],
     ['pmc', 'Related Pubmed Central Identifier'],
     ['uri', 'URI for a captured identifier'],
@@ -70,13 +71,19 @@ export class DetailsPageComponent {
   }
 
   ngOnInit() {
-    console.log(`id is ${this.id}`);
-    let tempResult = this.rService.getRecordById(parseInt(this.id));
+    const decodedDoi = decodeURIComponent(this.doi);
+    console.log(`id is ${decodedDoi}`);
+    let tempResult = this.rService.getRecordByDoi(decodedDoi);
+    console.log({'record is ': tempResult});
     if (typeof tempResult !== 'undefined') {
       this.result = tempResult;
     } else {
       throw new DOMException("WAAAAAAH");
     }
+  }
+
+  private _getOpenAlexCites(uri: string) {
+
   }
 
   formatValue(key: string, obj: any) {

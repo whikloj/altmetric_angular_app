@@ -72,7 +72,7 @@ interface OpenAlexResult {
   doi: string;
   grants: Object[];
   id: string;
-  ids: Object;
+  ids: OpenAlexIds;
   institutions_distinct_count: number;
   is_oa: boolean;
   is_paratext: boolean;
@@ -100,13 +100,35 @@ interface OpenAlexResult {
  * An OpenAlex authorship object.
  */
 interface Authorship {
-  author: string;
+  author: DehydratedAuthor;
   author_position: string;
   countries: string[];
   institutions: Object[];
   is_corresponding: boolean;
   raw_affiliation_name: string;
   raw_author_name: string;
+}
+
+/**
+ * An OpenAlex author contained in a Works Authorship object.
+ */
+interface DehydratedAuthor {
+  [key: string]: string;
+  id: string;
+  display_name: string;
+  orcid: string;
+}
+
+/**
+ * An OpenAlex Works ids object.
+ */
+interface OpenAlexIds {
+  [key: string]: string;
+  doi: string;
+  mag: string;
+  openalex: string;
+  pmid: string;
+  pmcid: string;
 }
 
 /**
@@ -158,13 +180,16 @@ class Result {
   setFromOpenAlex(obj: OpenAlexResult): void {
     this.openalex_details = obj;
     this.ids.push(obj.id);
+    for (const i in this.openalex_details.ids) {
+        this.ids.push(this.openalex_details.ids[i]);
+    }
     this.dois.push(this._formatDoi(obj.doi));
     this.title.push(obj.title);
     this.type.push(obj.type);
     if (typeof(this.publication_date) === 'undefined') {
       this.publication_date = obj.publication_date;
     }
-    obj.authorships.map(e => e.author).forEach((ele: string) => this.author_names.push(ele));
+    obj.authorships.map(e => e.author.display_name).forEach((ele: string) => this.author_names.push(ele));
     this.cited_by_counts.set('openalex', obj.cited_by_count);
     this._dedupMainProps();
   }
