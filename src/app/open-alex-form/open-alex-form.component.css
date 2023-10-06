@@ -1,0 +1,15 @@
+div.open-alex-config {
+  width: 22em;
+  flex-basis: 22em;
+  position: relative;
+  right: 0;
+  top: 0;
+  margin-right: 0.6em;
+  margin-top: 0.6em;
+  background-color: #555353;
+  border: 1px solid black;
+  padding: 0.2em;
+}
+.green-check-mark {
+  max-width: 1.1em;
+}

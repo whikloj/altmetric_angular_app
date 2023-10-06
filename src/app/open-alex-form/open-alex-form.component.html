@@ -1,0 +1,8 @@
+<div class="open-alex-config">
+  <label for="email_input">Email address</label>
+  <input id="email_input" #emailInput (keydown)="resetEmail()" type="text" value="{{ current_email }}" size="30" maxlength="255" />
+  <button (click)=[changeEmail(emailInput)]>Set</button>
+  <img *ngIf="green_mark" src="assets/green_mark.png" class="invisible green-check-mark" />
+  <p>OpenAlex is free to use, but limits to 100k requests per day and 10 requests per second. You can get access to a faster pool
+    by adding your email address to requests. <b>Set</b> your email here to configure this.</p>
+</div>
