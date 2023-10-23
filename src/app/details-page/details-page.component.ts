@@ -1,22 +1,27 @@
-import { Component, Input, inject } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { Observable, ObservableInput } from 'rxjs';
+import { Component, Input } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 
 import { ResultService } from '../result.service';
-import { AltmetricResult, OpenAlexResult, Result, OpenAlexCitedByCounts } from '../result';
+import { Result, OpenAlexCitedByCounts } from '../result';
 
+/**
+ * This component is used to display the details for a single result.
+ */
 @Component({
   selector: 'app-details-page',
   templateUrl: './details-page.component.html',
   styleUrls: ['./details-page.component.css']
 })
 export class DetailsPageComponent {
+  // The DOI for the current result.
   @Input() doi = '';
+  // The current result.
   result!: Result;
+  // The citation chart.
   citation_chart!: Chart;
+  // The result service.
   private rService: ResultService;
+  // The list of labels for the fields to export.
   labels: string[][] = [
     ['title', 'Title'],
     ['doi', 'Relevant DOI'],
@@ -56,6 +61,7 @@ export class DetailsPageComponent {
     ['authors_or_editors', 'Author and editor names'],
     ['attribution', 'Source of data. For example Google Books']
   ];
+  // The list of date fields.
   date_fields: string[] = [
     'last_updated',
     'pubdate',
@@ -72,6 +78,9 @@ export class DetailsPageComponent {
     this.rService = service;
   }
 
+  /**
+   * On init, get the current result.
+   */
   ngOnInit() {
     const decodedDoi = decodeURIComponent(this.doi);
     console.log(`id is ${decodedDoi}`);
@@ -87,10 +96,11 @@ export class DetailsPageComponent {
     }
   }
 
-  private _getOpenAlexCites(uri: string) {
-
-  }
-
+  /**
+   * Generate the citation chart.
+   * @param {OpenAlexCitedByCounts[]} cited_by_year - List of cited by counts by year.
+   * @returns {Chart} The citation chart.
+   */
   generateChart(cited_by_year: OpenAlexCitedByCounts[]): Chart {
 
     return new Chart('block-cite-year', {
@@ -115,6 +125,12 @@ export class DetailsPageComponent {
     });
   }
 
+  /**
+   * Format the value for display.
+   * @param {string} key - The formatting key
+   * @param {any} obj - The object to format.
+   * @returns {any} The formatted object.
+   */
   formatValue(key: string, obj: any) {
     if (this.date_fields.includes(key)) {
       let d = new Date(obj*1000);

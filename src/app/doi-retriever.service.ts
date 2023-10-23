@@ -6,14 +6,20 @@ import { HttpClient, HttpResponse, HttpErrorResponse, HttpParams } from '@angula
 import { OpenAlexResult, AltmetricResult } from './result';
 import { OpenAlexConfigService } from './open-alex-config.service';
 
+/**
+ * This service is used to retrieve records from Altmetric and OpenAlex.
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class DoiRetrieverService {
+  // The base URL for the Altmetric API.
   readonly altmetric_baseUrl: string = "https://api.altmetric.com/v1/doi/";
+  // The base URL for the OpenAlex API.
   readonly openalex_baseUrl: string = "https://api.openalex.org/works";
-
+  // The http client.
   client: HttpClient;
+  // The user's email address.
   openalex_email: string = "";
 
   /**

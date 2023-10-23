@@ -3,12 +3,22 @@ import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/c
 import { Observable, of, timer } from 'rxjs';
 import { retry } from 'rxjs/operators';
 
+/**
+ * This interceptor is used to retry requests that fail with a 429 Too many requests error.
+ */
 @Injectable()
 export class ApiMonitorInterceptor implements HttpInterceptor {
-
+  // The number of times to retry.
   readonly retry_count: number = 10;
+  // The number of milliseconds to wait between retries.
   readonly retry_wait_milliseconds: number = 2000;
 
+  /**
+   * Interceptor method.
+   * @param request the current request.
+   * @param next the http handler.
+   * @returns a timer or the error.
+   */
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       retry({count: this.retry_count, delay: (error: any, retryCount: number) => {

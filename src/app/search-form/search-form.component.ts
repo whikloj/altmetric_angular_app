@@ -1,13 +1,12 @@
 import { Component, Injectable } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormControl, FormGroup } from '@angular/forms';
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { DoiRetrieverService } from '../doi-retriever.service';
-import { AltmetricResult, OpenAlexResult } from '../result';
 import { ResultService } from '../result.service';
 import { FormStateService } from '../form-state.service';
-import { forkJoin } from 'rxjs';
 
+/**
+ * This component is used to display the correct search form.
+ */
 @Component({
   selector: 'app-search-form',
   templateUrl: 'search-form.component.html',
@@ -15,12 +14,15 @@ import { forkJoin } from 'rxjs';
 })
 @Injectable()
 export class SearchFormComponent {
+  // The service to perform the DOI queries.
   private queryService: DoiRetrieverService;
+  // The service to store the results.
   private resultService: ResultService;
+  // The current state of the form between single and multiple DOIs.
   currentFormState: boolean = true;
+  // The current errors.
   errors: string[] = [];
-  private currentFile: File | undefined;
-  private currentText: string = "";
+  // The file reader.
   private reader = new FileReader();
 
   /**
@@ -30,7 +32,7 @@ export class SearchFormComponent {
    * @param {ResultService} rs - Service that stores/returns the current list of results.
    * @param {FormStateService} fs - Service to provide the current state of the form.
    */
-  constructor (private cq: DoiRetrieverService, private rs: ResultService, private fs: FormStateService) {
+  constructor (cq: DoiRetrieverService, rs: ResultService, fs: FormStateService) {
     this.queryService = cq;
     this.resultService = rs;
     fs.formState$.subscribe((state: boolean) => {
@@ -42,7 +44,7 @@ export class SearchFormComponent {
   /**
    * Clear all results.
    */
-  resetRecords():void {
+  resetRecords(): void {
     this.resultService.resetRecords();
     this.resetErrors();
   }
