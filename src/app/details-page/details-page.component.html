@@ -41,7 +41,7 @@
     <div class="row" *ngIf="result.openalex_details !== undefined && result?.cited_by_counts?.get('openalex')! > 0">
       <label for="block-cite-year">OpenAlex citations by year</label>
       <div class="chart">
-        <canvas id="block-cite-year">{{ citation_chart }}</canvas>
+        <app-views-chart [data]="result.openalex_details"></app-views-chart>
       </div>
     </div>
   </div>

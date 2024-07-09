@@ -1,0 +1,6 @@
+canvas {
+  position: relative;
+  display: inline-block;
+  height: 10em;
+  background-color: white;
+}

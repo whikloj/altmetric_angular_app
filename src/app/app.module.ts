@@ -13,6 +13,7 @@ import { SearchPageComponent } from './search-page/search-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { OpenAlexFormComponent } from './open-alex-form/open-alex-form.component';
 import { ApiMonitorInterceptor } from './api-monitor.interceptor';
+import { ViewsChartComponent } from './views-chart/views-chart.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ApiMonitorInterceptor } from './api-monitor.interceptor';
     FormChoiceComponent,
     DetailsPageComponent,
     SearchPageComponent,
-    OpenAlexFormComponent
+    OpenAlexFormComponent,
+    ViewsChartComponent
   ],
   imports: [
     BrowserModule,

@@ -88,9 +88,6 @@ export class DetailsPageComponent {
     console.log({'record is ': tempResult});
     if (typeof tempResult !== 'undefined') {
       this.result = tempResult;
-      if (tempResult.openalex_details !== undefined) {
-        this.citation_chart = this.generateChart(tempResult.openalex_details.counts_by_year);
-      }
     } else {
       throw new DOMException("WAAAAAAH");
     }

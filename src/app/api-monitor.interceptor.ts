@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
-import { Observable, of, timer } from 'rxjs';
+import { Observable, throwError, timer } from 'rxjs';
 import { retry } from 'rxjs/operators';
 
 /**
@@ -27,7 +27,7 @@ export class ApiMonitorInterceptor implements HttpInterceptor {
         if (retryCount <= this.retry_count && error.status == 429) {
           return timer(this.retry_wait_milliseconds);
         }
-        return of(error);
+        return throwError(() => error);
       }})
     );
   }

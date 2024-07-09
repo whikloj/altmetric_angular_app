@@ -1,5 +1,5 @@
 .App-link {
-  color: #61dafb;
+  color: #fff;
 }
 
 .navigation {
@@ -27,9 +27,3 @@
   content: ':';
 }
 
-.chart {
-  position: relative;
-  display: inline-block;
-  height: 10em;
-  background-color: white;
-}
