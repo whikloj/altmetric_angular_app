@@ -1,0 +1,10 @@
+<ng-template #altmetricDonut>
+  <a class="App-link" href="{{ data.details_url }}" target="_new">
+    <img src="{{ getImageUrl() }}"
+      alt="Altmetric Donut, click to open Altmetric details page"
+      title="Click to open Altmetric details page" />
+  </a>
+</ng-template>
+<a class="App-link" href="{{ data.details_url }}" target="_new" *ngIf="getImageUrl() === null else altmetricDonut" >
+  Open Altmetric details
+</a>

@@ -94,35 +94,6 @@ export class DetailsPageComponent {
   }
 
   /**
-   * Generate the citation chart.
-   * @param {OpenAlexCitedByCounts[]} cited_by_year - List of cited by counts by year.
-   * @returns {Chart} The citation chart.
-   */
-  generateChart(cited_by_year: OpenAlexCitedByCounts[]): Chart {
-
-    return new Chart('block-cite-year', {
-      type: 'line', //this denotes tha type of chart
-
-      data: {// values on X-Axis
-        labels: cited_by_year.map(e => e.year),
-	       datasets: [
-          {
-            label: "Citations",
-            data: cited_by_year.map(e => e.cited_by_count),
-            backgroundColor: '#c231ce',
-            showLine: true,
-            borderColor: '#c231ce'
-          }
-        ]
-      },
-      options: {
-        aspectRatio:2.5,
-        responsive: true,
-      }
-    });
-  }
-
-  /**
    * Format the value for display.
    * @param {string} key - The formatting key
    * @param {any} obj - The object to format.

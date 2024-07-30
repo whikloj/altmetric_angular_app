@@ -21,6 +21,12 @@
       <span id="block-author" *ngIf="result.author_names !== undefined; else blankSpan">{{ result.author_names.join(', ') }}</span>
     </div>
     <div class="row">
+      <label for="block-alt-donut">Altmetric Donut</label>
+      <span id="block-alt-donut" *ngIf="result.altmetric_details !== undefined; else blankSpan">
+        <img src="{{ result.altmetric_details.images.medium }}" alt="Altmetric Donut" />
+      </span>
+    </div>
+    <div class="row">
       <label for="block-alt-score">Altmetric score</label>
       <span id="block-alt-score" *ngIf="result.altmetric_details !== undefined; else blankSpan">{{ result.altmetric_details.score }}</span>
     </div>

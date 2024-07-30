@@ -27,3 +27,6 @@
   content: ':';
 }
 
+#block-alt-donut img {
+  background-color: white;
+}

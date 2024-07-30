@@ -1,4 +1,3 @@
-import { AltmetricImages } from './altmetric-images';
 
 /**
  * An altmetric count api query object
@@ -138,6 +137,15 @@ interface OpenAlexCitedByCounts {
   [key: string]: number;
   year: number;
   cited_by_count: number;
+}
+
+/**
+ * Altmetric Donut image URLs
+ */
+export interface AltmetricImages {
+  small: string;
+  medium: string;
+  large: string;
 }
 
 /**

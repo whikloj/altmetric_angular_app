@@ -14,11 +14,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { OpenAlexFormComponent } from './open-alex-form/open-alex-form.component';
 import { ApiMonitorInterceptor } from './api-monitor.interceptor';
 import { ViewsChartComponent } from './views-chart/views-chart.component';
+import { AltMetricDonutComponent } from './altmetric-donut/altmetric-donut.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    AltMetricDonutComponent,
     SearchFormComponent,
     ResultsComponent,
     TotalsComponent,
